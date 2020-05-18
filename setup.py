@@ -1,3 +1,5 @@
+import re
+
 from setuptools import setup
 #from distutils.core import setup
 from setuptools.extension import Extension
@@ -15,30 +17,38 @@ cmdclass = { }
 ext_modules = [ ]
 
 if use_cython:
+    import numpy
     ext_modules += [
-        Extension("pycentre.core", [ "pycentre/core.pyx" ]),
-        Extension("pycentre.subsetdofs", [ "pycentre/subsetdofs.pyx" ]),
-        Extension("pycentre.neighbordofs", [ "pycentre/neighbordofs.pyx" ]),
-        Extension("pycentre.analysis", [ "pycentre/analysis.pyx" ]),
+        Extension("pycentre.core", [ "pycentre/core.pyx" ], include_dirs=[numpy.get_include()]),
+        Extension("pycentre.subsetdofs", [ "pycentre/subsetdofs.pyx" ], include_dirs=[numpy.get_include()]),
+        Extension("pycentre.neighbordofs", [ "pycentre/neighbordofs.pyx" ], include_dirs=[numpy.get_include()]),
+        Extension("pycentre.analysis", [ "pycentre/analysis.pyx" ], include_dirs=[numpy.get_include()]),
     ]
     for e in ext_modules:
         e.cython_directives = {'language_level': "3"}
     cmdclass.update({ 'build_ext': build_ext })
 else:
+    import numpy
     ext_modules += [
-        Extension("pycentre.core", [ "pycentre/core.c" ]),
-        Extension("pycentre.subsetdofs", [ "pycentre/subsetdofs.c" ]),
-        Extension("pycentre.neighbordofs", [ "pycentre/neighbordofs.c" ]),
-        Extension("pycentre.analysis", [ "pycentre/analysis.c" ]),
+        Extension("pycentre.core", [ "pycentre/core.c" ], include_dirs=[numpy.get_include()]),
+        Extension("pycentre.subsetdofs", [ "pycentre/subsetdofs.c" ], include_dirs=[numpy.get_include()]),
+        Extension("pycentre.neighbordofs", [ "pycentre/neighbordofs.c" ], include_dirs=[numpy.get_include()]),
+        Extension("pycentre.analysis", [ "pycentre/analysis.c" ], include_dirs=[numpy.get_include()]),
     ]
 
 for e in ext_modules:
     e.cython_directives = {'language_level': "3"}
+    
 
+def get_property(prop, project):
+    result = re.search(r'{}\s*=\s*[\'"]([^\'"]*)[\'"]'.format(prop), open(project + '/__init__.py').read())
+    return result.group(1)
+
+project_name = 'pycentre'
 setup(
     name = "pycentre",
     packages = ["pycentre"],
-    version = "0.1.0",
+    version = get_property('__version__', project_name),
     package_data={'pycentre': ['data/*.lib']},
     description = "Cartesian to BAT coordinate system MD trajectory conversion",
     author = "Shailesh Kumar Panday",
@@ -57,7 +67,7 @@ setup(
         "Operating System :: OS Independent",
         "Topic :: Configurational entropy :: Molecular Dynamics :: Libraries",
     ],
-    scripts=['scripts/cart2bat.py', 'scripts/entropyscoring-v0.3.py', 'scripts/histogram-analysis.py', 'scripts/neighborbuilder.py'],
+    scripts=['scripts/cart2bat.py', 'scripts/entropyscoring.py', 'scripts/histogram-analysis.py', 'scripts/neighborbuilder.py'],
     setup_requires=['Cython >= 0.18'],
     install_requires=[
         'pytraj>=1.0',

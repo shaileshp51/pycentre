@@ -11,7 +11,7 @@ import pytraj as pt
 
 from datetime import datetime
 
-
+import pycentre
 import pycentre.subneigh as subneigh 
 import pycentre.mmsystem as mm
 import pycentre.utils_ as utls
@@ -35,27 +35,28 @@ def main():
     requiredNamed.add_argument(
         "-t", "--tree", help="tree-file of molecular system", required=True)
     parser.add_argument(
-        "-s", "--sel", help="sel_fliter string for atoms involving which bonds and angles are not-considered for entropy calculation: as for cpptraj", default="@H=")
-    parser.add_argument("-c", "--cutoff", help="distance cutoff for neighbor consideration",
-                        type=int, action="store", default=[6], nargs='*')
+        "-s", "--sel", help="sel_fliter string for atoms involving which bonds and angles are not-considered for entropy calculation: as for cpptraj (default: :*@H=)", default=":*@H=")
+    parser.add_argument("-c", "--cutoff", help="distance cutoff in angstrom for neighbor consideration (default: 14)",
+                        type=int, action="store", default=[14], nargs='*')
     parser.add_argument("-osf", "--out-subset-file",
-                        help="filename for subset output", default="subset.txt")
+                        help="filename for subset output (default: workdir/subset.txt)", default="subset.txt")
     parser.add_argument(
-        "-d", "--dist", help="atom-atom distance file molecular system")
+        "-d", "--dist", help="atom-atom distance file molecular system (default: workdir/distmatrix.txt)")
     parser.add_argument("-onfp", "--out-neighbor-file-prefix",
-                        help="filename prefix for neighbor output", default="neigh")
+                        help="filename prefix for neighbor output (default: neigh)", default="neigh")
     parser.add_argument("-bo", "--bond-order",
-                        help="bond-order for entropy calculation", type=int, default=2)
+                        help="bond-order for entropy calculation (default: 2)", type=int, default=2)
     parser.add_argument("-ao", "--angle-order",
-                        help="angle-order for entropy calculation", type=int, default=2)
+                        help="angle-order for entropy calculation (default: 2)", type=int, default=2)
     parser.add_argument("-to", "--torsion-order",
-                        help="torsion-order for entropy calculation", type=int, default=2)
+                        help="torsion-order for entropy calculation (default: 2)", type=int, default=2)
     parser.add_argument("-nba", "--no-ba-cross",
-                        help="include bond-angle-cross in entropy calculation", action="store_false")
+                        help="include bond-angle-cross in entropy calculation (default: True, i.e. ba-cross)", action="store_false")
     parser.add_argument("-nbt", "--no-bt-cross",
-                        help="include bond-torsion-cross in entropy calculation", action="store_false")
+                        help="include bond-torsion-cross in entropy calculation (default: True, i.e. ba-cross)", action="store_false")
     parser.add_argument("-nat", "--no-at-cross",
-                        help="include bond-torsion-cross in entropy calculation", action="store_false")
+                        help="include bond-torsion-cross in entropy calculation (default: True, i.e. ba-cross)", action="store_false")
+    parser.add_argument('--version', action='version', version='%(prog)s version='+str(pycentre.__version__))
     args = parser.parse_args()
 
     print("Reading: Mol. System Tree..")

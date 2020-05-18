@@ -11,7 +11,7 @@ import pytraj as pt
 
 from datetime import datetime
 
-
+import pycentre
 import pycentre.subneigh as subneigh 
 import pycentre.mmsystem as mm
 import pycentre.utils_ as utls
@@ -156,11 +156,11 @@ parser.add_argument("-psb",
                     nargs='*')
 parser.add_argument("-nochunk",
                     "--no-chunk",
-                    help="do not use chunk of frames from input trajectory for process",
+                    help="do not use chunk of frames from input trajectory for process (default: False)",
                     action="store_true")
 parser.add_argument("-csz",
                     "--chunk-size",
-                    help="chunk-size: number of frames in chunk",
+                    help="chunk-size: number of frames in chunk (default: 4096)",
                     type=int,
                     default=4096)
 parser.add_argument("-nph",
@@ -169,7 +169,7 @@ parser.add_argument("-nph",
                     action="store_true")
 parser.add_argument("-nrd",
                     "--no-radian",
-                    help="do not use radian, use degree. (default: radian)",
+                    help="do not use radian, use degree. (default: False, i.e. radian)",
                     action="store_true")
 parser.add_argument("-ndfs",
                     "--no-dfs",
@@ -191,54 +191,56 @@ parser.add_argument("-tree",
                     "--tree-file",
                     help="filename for writing molecule-tree. (default: work-dir/tree-cart2bat.dat)",
                     default="tree-cart2bat.dat")
+parser.add_argument('--version', action='version', version='%(prog)s version='+str(pycentre.__version__))
+
 
 subsetgrp = parser.add_argument_group(
     'Subset-DOFs and NeighborDOFS command group')
 subsetgrp.add_argument("-sub", "--subset-sel",
-                       default="@H=",
-                       help="selection-string for atoms, DOFs(bonds and angles) involving which are not-considered for entropy calculation: as for cpptraj")
+                       default=":*@H=",
+                       help="selection-string for atoms, DOFs(bonds and angles) involving which are not-considered for entropy calculation: as for cpptraj (default: :*@H=)")
 subsetgrp.add_argument("-cut", "--cutoff",
-                       help="distance cutoff for neighbor consideration",
-                       type=int, action="store", default=[6], nargs='*')
+                       help="distance cutoff in angstrom for neighbor consideration (default: 14)",
+                       type=int, action="store", default=[14], nargs='*')
 subsetgrp.add_argument("-osf", "--out-subset-file",
-                       help="filename for subset output", default="subset.txt")
+                       help="filename for subset output (default: work-dir/subset.txt)", default="subset.txt")
 subsetgrp.add_argument("-nneigh",
                        "--no-neighbor",
-                       help="do not create neighbor list for default distance cutoff, (default: False i.e. dfs)",
+                       help="do not create neighbor list for default distance cutoff, (default: False)",
                        action="store_true")
 subsetgrp.add_argument("-odf", "--out-distance-file",
-                       help="filename for distance matrix", default="distmatrix.txt")
+                       help="filename for distance matrix (default: work-dir/distmatrix.txt)", default="distmatrix.txt")
 subsetgrp.add_argument("-dskip", "--dist-frame-skip",
                        type=int, 
                        default=100,
-                       help="consider every skip frame for avg. atom-atom distance calculation")
+                       help="consider every skip frame for avg. atom-atom distance calculation (default: 100)")
 subsetgrp.add_argument("-onfp", "--out-neigh-fprefix",
-                       help="filename prefix for neighbor output",
+                       help="filename prefix for neighbor output (default: neigh)",
                        default="neigh")
 subsetgrp.add_argument("-bo", "--bond-order",
-                       help="bond-order for entropy calculation",
+                       help="bond-order for entropy calculation (default: 2)",
                        type=int,
                        default=2)
 subsetgrp.add_argument("-ao", "--angle-order",
-                       help="angle-order for entropy calculation",
+                       help="angle-order for entropy calculation (default: 2)",
                        type=int,
                        default=2)
 subsetgrp.add_argument("-to", "--torsion-order",
-                       help="torsion-order for entropy calculation",
+                       help="torsion-order for entropy calculation (default: 2)",
                        type=int,
                        default=2)
 subsetgrp.add_argument("-nba", "--no-ba-cross",
-                       help="include bond-angle-cross in entropy calculation",
+                       help="include bond-angle-cross in entropy calculation (default: True, i.e. ba-cross)",
                        action="store_false")
 subsetgrp.add_argument("-nbt", "--no-bt-cross",
-                       help="include bond-torsion-cross in entropy calculation",
+                       help="include bond-torsion-cross in entropy calculation (default: True, i.e. bt-cross)",
                        action="store_false")
 subsetgrp.add_argument("-nat", "--no-at-cross",
-                       help="include bond-torsion-cross in entropy calculation",
+                       help="include bond-torsion-cross in entropy calculation (default: True, i.e. at-cross)",
                        action="store_false")
 
 child_parser = CustomArgumentParser(fromfile_prefix_chars='@', parents=[parser],
-                                    prog='PROG',
+                                    prog='cart2bat.py',
                                     formatter_class=argparse.RawDescriptionHelpFormatter,
                                     description=textwrap.dedent('''\
          Please do consider possibility given below as well!
@@ -247,7 +249,7 @@ child_parser = CustomArgumentParser(fromfile_prefix_chars='@', parents=[parser],
              say (cmd_args.txt), each option in seperate-line, you can also keep
              comment lines starting with character '#' in the file, Then involke
              program to read it from file using:
-             PROG @cmd_args.txt
+             cart2bat.py @cmd_args.txt
          ****************************************************************************
          '''))
 group = child_parser.add_argument_group('required traj command group')

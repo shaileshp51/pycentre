@@ -1,4 +1,4 @@
-README.txt
+README
 setup.cfg
 setup.py
 pycentre/__init__.py
@@ -20,5 +20,6 @@ pycentre.egg-info/top_level.txt
 pycentre/data/sidechaintorsions.lib
 scripts/cart2bat.py
 scripts/entropyscoring-v0.3.py
+scripts/entropyscoring.py
 scripts/histogram-analysis.py
 scripts/neighborbuilder.py

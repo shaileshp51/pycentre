@@ -14,6 +14,8 @@ import numpy as np
 import netCDF4 as nc
 
 import matplotlib.pyplot as plt
+import pycentre
+
 from scipy import stats
 from pycentre import *
 from pycentre.analysis import *
@@ -79,15 +81,15 @@ requiredNamed.add_argument("-fentpref",
 parser.add_argument("-fxt",
                     "--fentext",
                     default='.csv',
-                    help="file-extension of entropy-report-file [default='.csv']")
+                    help="file-extension of entropy-report-file (default='.csv')")
 parser.add_argument("-t",
                     "--threshold",
                     default=1.0,
-                    help="percent value for threshold below which bin is flagged poorly-populated [defaut=1.0]")
-
+                    help="percent value for threshold below which bin is flagged poorly-populated (defaut=1.0)")
+parser.add_argument('--version', action='version', version='%(prog)s version='+str(pycentre.__version__))
 
 child_parser = CustomArgumentParser(fromfile_prefix_chars='@', parents=[parser],
-                                    prog='PROG',
+                                    prog='histogram-analysis.py',
                                     formatter_class=argparse.RawDescriptionHelpFormatter,
                                     description=textwrap.dedent('''\
          Please do consider possibility given below as well!
@@ -96,7 +98,7 @@ child_parser = CustomArgumentParser(fromfile_prefix_chars='@', parents=[parser],
              say (cmd_args.txt), each option in seperate-line, you can also keep
              comment lines starting with character '#' in the file, Then involke
              program to read it from file using:
-             PROG @cmd_args.txt
+             histogram-analysis.py @cmd_args.txt
          ****************************************************************************
          '''))
         

@@ -1,0 +1,4 @@
+This package is developed to convert Cartesian coordinate Molecular Dynamics trajectories generated using 
+AMBER/NAMD/CHARMM/GROMACS to BOND-ANGLE-TORSION coordinate trajectory. This package also implements the 
+auxilary functions for analysis of convergance of entropy computed using CENTRE. It also implements
+functions for contribution analysis.
