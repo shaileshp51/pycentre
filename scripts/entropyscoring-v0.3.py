@@ -8,12 +8,10 @@ import textwrap
 import argparse
 
 try:
-    import pycentre
     from pycentre import centretypes as pyctypes
     from pycentre import mmsystem as pycmms
     from pycentre import analysis as pycanalysis
 except ImportError:
-    import pycentre
     import pycentre.centretypes as pyctypes
     import pycentre.mmsystem as pycmms
     import pycentre.analysis as pycanalysis
@@ -152,7 +150,7 @@ requiredNamed.add_argument("-t",
 parser.add_argument("-m",
                     "--score-method",
                     default=pyctypes.ScoringMethods.MIE,
-                    help="Entropy method for scoring. choose from {'MIE', 'MIST'} (default: 'MIE')")
+                    help="Entropy method for scoring. (default: 'MIE')")
 parser.add_argument("-e",
                     "--estimators",
                     default="all",
@@ -173,7 +171,6 @@ parser.add_argument("-o",
                     "--out-file",
                     default=sys.stdout,
                     help="filename for writing run output. (default: sys.stdout)")
-parser.add_argument('--version', action='version', version='%(prog)s version='+str(pycentre.__version__))
 
 child_parser = CustomArgumentParser(fromfile_prefix_chars='@', parents=[parser],
                                     prog='entropyscoring.py',
