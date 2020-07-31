@@ -53,8 +53,8 @@ setup(
     description = "Cartesian to BAT coordinate system MD trajectory conversion",
     author = "Shailesh Kumar Panday",
     author_email = "shaileshp51@gmail.com",
-    url = "http://ccbb.jnu.ac.in/",
-    download_url = "http://ccbb.jnu.ac.in",
+    url = "https://github.com/shaileshp51/pycentre",
+    download_url = "https://github.com/shaileshp51/pycentre",
     keywords = ["trajectory", "md", "bat", "configurational entropy"],
     classifiers = [
         "Programming Language :: Python",
