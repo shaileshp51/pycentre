@@ -19,9 +19,9 @@
 
 **Step 1: Install requirements**
 
-Requirements for installation of pycentre can be installed using follwoing options:
+Requirements for installation of pycentre can be installed using one of the follwoing options:
 
-**Option a) Recommended: using anaconda or miniconda**
+**(a) Recommended: using anaconda or miniconda**
 
 > The simplest way to install miniconda is as below, open terminal and run below commands.
 
@@ -48,7 +48,7 @@ accept license and follow instructions.
 
 `conda activate venv_pycentre`
 
-**Option b) Using pip3 for a working python3 >=3.6**
+**(b) Using pip3 for a working python3 >=3.6**
 
 > Install packages required by pycentre setup
 
