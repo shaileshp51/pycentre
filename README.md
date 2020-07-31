@@ -50,9 +50,11 @@ accept license and follow instructions.
 `cd pycentre`
 
 `# Linux`
+
 `python ./setup.py install`
 
 `# macOS:`
+
 `python setup.py install`
 
 ## Install when required packages already installed
@@ -64,9 +66,11 @@ accept license and follow instructions.
 `cd pycentre`
 
 `# Linux`
+
 `python ./setup.py install`
 
 `# macOS:`
+
 `python setup.py install`
 > Note: here python referes to python3, which may be accessible as python if its a conda virtual environment. If the python is system python3 you may have to use sudo to grant write permission for installation.
 
