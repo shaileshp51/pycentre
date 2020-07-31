@@ -15,9 +15,10 @@
 - networkx>=1.11
 - pytraj >=1.0
 
-## Install required packages
+## Install 
 
-**Recommended: using anaconda or miniconda **
+**Step 1: Install requirements**
+**Option a) Recommended: using anaconda or miniconda**
 
 > The simplest way to install miniconda is as below, open terminal and run below commands.
 
@@ -44,22 +45,15 @@ accept license and follow instructions.
 
 `conda activate venv_pycentre`
 
-> Now get pycentre source code from git
+**Option b) Using pip3 for a working python3 >=3.6**
 
-`git clone https://github.com/shaileshp51/pycentre.git`
-`cd pycentre`
+> Install packages required by pycentre setup
 
-`# Linux`
+`pip3 install python numpy`
 
-`python ./setup.py install`
+**Step 2: Install pycentre from source code (for Linux and macOS)**
 
-`# macOS:`
-
-`python setup.py install`
-
-## Install when required packages already installed
-
-** from source code (for Linux and macOS) **
+> Get pycentre source code from git
 
 `git clone https://github.com/shaileshp51/pycentre.git`
 
