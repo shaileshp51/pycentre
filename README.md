@@ -60,6 +60,7 @@ accept license and follow instructions.
 ** from source code (for Linux and macOS) **
 
 `git clone https://github.com/shaileshp51/pycentre.git`
+
 `cd pycentre`
 
 `# Linux`
