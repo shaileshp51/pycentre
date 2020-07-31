@@ -64,11 +64,11 @@ accept license and follow instructions.
 
 `# Linux`
 
-`python ./setup.py install`
+`python3 ./setup.py install`
 
 `# macOS:`
 
-`python setup.py install`
+`python3 setup.py install`
 > Note: here python referes to python3, which may be accessible as python if its a conda virtual environment. If the python is system python3 you may have to use sudo to grant write permission for installation.
 
 # Usage
