@@ -2,11 +2,11 @@ Metadata-Version: 1.1
 Name: pycentre
 Version: 0.1.0.post20200514b1
 Summary: Cartesian to BAT coordinate system MD trajectory conversion
-Home-page: http://ccbb.jnu.ac.in/
+Home-page: https://github.com/shaileshp51/pycentre
 Author: Shailesh Kumar Panday
 Author-email: shaileshp51@gmail.com
 License: UNKNOWN
-Download-URL: http://ccbb.jnu.ac.in
+Download-URL: https://github.com/shaileshp51/pycentre
 Description: Python Package for processing Molecular Dynamics Trajectories and Post processing CENRTE outputs.
         -------------------------------------------------------------------------------------------------
         
