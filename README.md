@@ -18,6 +18,9 @@
 ## Install 
 
 **Step 1: Install requirements**
+
+Requirements for installation of pycentre can be installed using follwoing options:
+
 **Option a) Recommended: using anaconda or miniconda**
 
 > The simplest way to install miniconda is as below, open terminal and run below commands.
