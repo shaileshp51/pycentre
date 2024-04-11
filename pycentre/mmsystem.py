@@ -377,6 +377,7 @@ class MMSystem:
         self.topopfile = ''
         self.atoms = {}
         self.residues = {}
+        self.resioff = {}
         self.bonds = []
         self.phaserefs = {}
         self.tree = None
@@ -393,9 +394,11 @@ class MMSystem:
         for a in self.top.atoms:
             if a.index in phaserefsatoms:
                 self.phaserefs[a.index + 1] = True
-
+        atmlist = [a for a in self.top.atoms]
+        reslist = [a for a in self.top.residues]
+        self.resioff = {atmlist[r.first].resid: r.original_resid - atmlist[r.first].resid for r in self.top.residues}
         self.residues = {
-            r.index + 1: r for r in self.top.residues}
+            r.original_resid: r for r in self.top.residues}
         self.bonds = [tuple([i + self.atom_start_index for i in b.indices])
                       for b in self.top.bonds if b.indices[0] in self.atomselected and b.indices[1] in self.atomselected]
         self.topofile = topofile
@@ -558,10 +561,10 @@ class MMSystem:
         pseudo_DOF = {}
         for k in sorted(self.tree.nodes.keys()):
             val = self.tree.nodes[k]
-            val.a1_res = self.atoms[k].resid + 1
-            val.a2_res = self.atoms[val.a2].resid + 1 if val.a2 != -1 else -1
-            val.a3_res = self.atoms[val.a3].resid + 1 if val.a3 != -1 else -1
-            val.a4_res = self.atoms[val.a4].resid + 1 if val.a4 != -1 else -1
+            val.a1_res = self.atoms[k].resid + self.resioff[self.atoms[k].resid]
+            val.a2_res = self.atoms[val.a2].resid + self.resioff[self.atoms[val.a2].resid] if val.a2 != -1 else -1
+            val.a3_res = self.atoms[val.a3].resid + self.resioff[self.atoms[val.a3].resid] if val.a3 != -1 else -1
+            val.a4_res = self.atoms[val.a4].resid + self.resioff[self.atoms[val.a4].resid] if val.a4 != -1 else -1
 
             # Assign residue for bondl
             if val.a1_res <= val.a2_res:
@@ -634,13 +637,13 @@ class MMSystem:
         tor_idx_ = 0
         for k in sorted(self.tree.nodes.keys()):
             val = self.tree.nodes[k]
-            res1 = val.a1_res = self.atoms[k].resid + 1
+            res1 = val.a1_res = self.atoms[k].resid + self.resioff[self.atoms[k].resid]
             res2 = val.a2_res = self.atoms[val.a2].resid + \
-                1 if val.a2 != -1 else -1
+                self.resioff[self.atoms[val.a2].resid] if val.a2 != -1 else -1
             res3 = val.a3_res = self.atoms[val.a3].resid + \
-                1 if val.a3 != -1 else -1
+                self.resioff[self.atoms[val.a3].resid] if val.a3 != -1 else -1
             res4 = val.a4_res = self.atoms[val.a4].resid + \
-                1 if val.a4 != -1 else -1
+                self.resioff[self.atoms[val.a4].resid] if val.a4 != -1 else -1
             aname1 = self.atoms[k].name
             aname2 = self.atoms[val.a2].name if val.a2 != -1 else '????'
             aname3 = self.atoms[val.a3].name if val.a3 != -1 else '????'
